@@ -1,12 +1,13 @@
 % ==========================================
-% 8-PUZZLE SOLVER FOR ANY JUMBLED INPUT (BFS)
+% 8-PUZZLE SOLVER FOR ARBITRARY INPUT (BFS)
 % ==========================================
-% State representation: A list of 9 numbers (0 through 8).
-% Goal State: [1, 2, 3, 4, 5, 6, 7, 8, 0]
+% State representation: A list of 9 numbers in any jumbled order.
+% Goal State: [1, 2, 3, 4, 5, 6, 7, 8, 0] (or you can adjust the goal list if needed)
 
 goal([1, 2, 3, 4, 5, 6, 7, 8, 0]).
 
 % Adjacency map of indices on a 3x3 grid (0 to 8)
+% Index layout:
 % 0 1 2
 % 3 4 5
 % 6 7 8
@@ -36,10 +37,10 @@ replace([H|T], I, X, [H|R]) :-
     I1 is I - 1,
     replace(T, I1, X, R).
 
-% Move the blank tile (0) to generate successor states
+% Move the blank tile (represented by 0) to generate successor states
 move(State, NextState) :-
-    nth0(ZIndex, State, 0),
-    valid_move(ZIndex, TargetIndex),
+    nth0(ZIndex, State, 0),          % Find where 0 is located in the arbitrary list
+    valid_move(ZIndex, TargetIndex), % Find valid adjacent index position
     swap(State, ZIndex, TargetIndex, NextState).
 
 % ==========================================

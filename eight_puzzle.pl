@@ -1,9 +1,3 @@
-% ==========================================
-% 8-PUZZLE SOLVER FOR ARBITRARY INPUT (BFS)
-% ==========================================
-% State representation: A list of 9 numbers in any jumbled order.
-% Goal State: [1, 2, 3, 4, 5, 6, 7, 8, 0] (or you can adjust the goal list if needed)
-
 goal([1, 2, 3, 4, 5, 6, 7, 8, 0]).
 
 % Adjacency map of indices on a 3x3 grid (0 to 8)
@@ -24,7 +18,6 @@ valid_move(5, 8). valid_move(8, 5).
 valid_move(6, 7). valid_move(7, 6).
 valid_move(7, 8). valid_move(8, 7).
 
-% Helper to swap elements and generate a new state
 swap(List, I1, I2, Res) :-
     nth0(I1, List, E1),
     nth0(I2, List, E2),
@@ -37,15 +30,11 @@ replace([H|T], I, X, [H|R]) :-
     I1 is I - 1,
     replace(T, I1, X, R).
 
-% Move the blank tile (represented by 0) to generate successor states
 move(State, NextState) :-
-    nth0(ZIndex, State, 0),          % Find where 0 is located in the arbitrary list
-    valid_move(ZIndex, TargetIndex), % Find valid adjacent index position
+    nth0(ZIndex, State, 0),          
+    valid_move(ZIndex, TargetIndex), 
     swap(State, ZIndex, TargetIndex, NextState).
 
-% ==========================================
-% BREADTH-FIRST SEARCH ALGORITHM
-% ==========================================
 solve(Start, Path) :-
     breadth_first([[Start]], RevPath),
     reverse(RevPath, Path).

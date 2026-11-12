@@ -1,8 +1,3 @@
-% ==========================================
-% DEPTH-FIRST SEARCH WITH EXPLORED PATHS
-% ==========================================
-
-% Define graph edges (bi-directional undirected graph)
 edge(a, b).
 edge(a, c).
 edge(b, d).
@@ -14,26 +9,18 @@ edge(f, goal).
 
 connected(X, Y) :- edge(X, Y) ; edge(Y, X).
 
-% ==========================================
-% DFS TRAVERSAL PREDICATE
-% ==========================================
-% dfs_trace(Current, Goal, VisitedPath, FinalPath)
-
-% Base case: Goal reached
 dfs_trace(Goal, Goal, Visited, Path) :-
     reverse([Goal | Visited], Path),
     format('Reached Goal via path: ~w~n', [Path]).
 
-% Recursive step: Explore deeper and print each branch path
 dfs_trace(Current, Goal, Visited, Path) :-
     connected(Current, Next),
-    \+ member(Next, Visited),                    % Prevent cycles
+    \+ member(Next, Visited),                    
     CurrentPath = [Current | Visited],
     reverse([Next | CurrentPath], DisplayPath),
     format('Exploring path branch: ~w~n', [DisplayPath]),
     dfs_trace(Next, Goal, [Current | Visited], Path).
 
-% Wrapper predicate
 solve_dfs(Start, Goal, Path) :-
     writeln('--- DFS Exploration Trace ---'),
     dfs_trace(Start, Goal, [], Path).

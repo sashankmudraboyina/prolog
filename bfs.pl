@@ -1,8 +1,3 @@
-% ==========================================
-% BREADTH-FIRST SEARCH WITH VISITED ORDER
-% ==========================================
-
-% Define graph edges (bi-directional undirected graph)
 edge(a, b).
 edge(a, c).
 edge(b, d).
@@ -14,20 +9,13 @@ edge(f, goal).
 
 connected(X, Y) :- edge(X, Y) ; edge(Y, X).
 
-% ==========================================
-% BFS VISITATION TRAVERSE
-% ==========================================
-% solve_bfs_traversal(Start, Goal, VisitedOrder, ShortestPath)
-
 solve_bfs_traversal(Start, Goal, VisitedOrder, Path) :-
     bfs_queue([[Start]], Goal, [], RevPath, RevVisited),
     reverse(RevPath, Path),
     reverse(RevVisited, VisitedOrder).
 
-% Base case: Goal found
 bfs_queue([[Goal | RestPath] | _], Goal, VisitedAcc, [Goal | RestPath], [Goal | VisitedAcc]).
 
-% Recursive step: Expand queue and track visited nodes
 bfs_queue([[Current | RestPath] | Queue], Goal, VisitedAcc, FinalPath, FinalVisited) :-
     (   \+ member(Current, VisitedAcc) ->
         NewVisitedAcc = [Current | VisitedAcc]
